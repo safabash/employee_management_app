@@ -107,10 +107,10 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(Icons.person),
-                          hintText: 'Enter your username',
+                          hintText: 'Enter your email',
                           hintStyle: theme.textTheme.displayMedium,
                           label: Text(
-                            'Username',
+                            'Email',
                             style: theme.textTheme.labelMedium,
                           ),
                           border: OutlineInputBorder(
@@ -119,7 +119,11 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your username';
+                            return 'Please enter your email';
+                          }
+                          // Email validation
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Please enter a valid email address';
                           }
                           return null;
                         },
@@ -208,7 +212,7 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                               email: emailController.text,
                               password: passwordController.text,
                             );
-                            Get.to(() => const Dashboard());
+                            // Get.to(() => const Dashboard());
                             registerController.setButtonState = submit;
                           }
                         },

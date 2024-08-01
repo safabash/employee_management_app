@@ -103,10 +103,10 @@ class _ScreenRegisterMobileState extends State<ScreenRegisterMobile> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(Icons.person),
-                          hintText: 'Enter your username',
+                          hintText: 'Enter your email',
                           hintStyle: theme.textTheme.displayMedium,
                           label: Text(
-                            'Username',
+                            'Email',
                             style: theme.textTheme.labelMedium,
                           ),
                           border: OutlineInputBorder(
@@ -115,7 +115,11 @@ class _ScreenRegisterMobileState extends State<ScreenRegisterMobile> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your username';
+                            return 'Please enter your email';
+                          }
+                          // Email validation
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Please enter a valid email address';
                           }
                           return null;
                         },
@@ -204,7 +208,7 @@ class _ScreenRegisterMobileState extends State<ScreenRegisterMobile> {
                               email: emailController.text,
                               password: passwordController.text,
                             );
-                            Get.to(() => const Dashboard());
+                            // Get.to(() => const Dashboard());
                             registerController.setButtonState = submit;
                           }
                         },

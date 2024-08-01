@@ -109,10 +109,10 @@ class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(Icons.person),
-                          hintText: 'Enter your username',
+                          hintText: 'Enter your email',
                           hintStyle: theme.textTheme.displayMedium,
-                          label: Text('Username',
-                              style: theme.textTheme.labelMedium),
+                          label:
+                              Text('Email', style: theme.textTheme.labelMedium),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -121,7 +121,10 @@ class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your email';
                           }
-                          // You can add more validation here if needed
+                          // Email validation
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Please enter a valid email address';
+                          }
                           return null;
                         },
                       ),
@@ -177,15 +180,15 @@ class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
                         text: 'Login',
                         onPressed: () async {
                           if (_formKey.currentState?.validate() ?? false) {
-                            // loginController.setButtonState = loading;
-                            // await authController.login(
-                            //   email: emailController.text,
-                            //   password: passwordController.text,
-                            // );
-                            // loginController.setButtonState = submit;
+                            loginController.setButtonState = loading;
+                            await authController.login(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                            loginController.setButtonState = submit;
 
                             // Assuming successful login
-                            Get.to(() => const Dashboard());
+                            // Get.to(() => const Dashboard());
                           } else {
                             // Handle validation error
                             loginController.setButtonState = submit;

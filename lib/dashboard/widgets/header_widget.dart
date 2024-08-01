@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HeaderWidget extends StatefulWidget {
+  const HeaderWidget({super.key});
+
   @override
   _HeaderWidgetState createState() => _HeaderWidgetState();
 }
@@ -32,7 +34,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           },
           Text("Dashboard", style: theme.textTheme.titleMedium),
           if (!Responsive.isMobile(context)) ...{
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -42,8 +44,6 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     controller.logout();
                   },
                 ),
-                // navigationIcon(icon: Icons.send),
-                // navigationIcon(icon: Icons.notifications_none_rounded),
               ],
             )
           }

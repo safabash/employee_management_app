@@ -1,4 +1,5 @@
 import 'package:employee_management_app/authentication/login/login_screen.dart';
+import 'package:employee_management_app/dashboard/dashboard_screen.dart';
 import 'package:employee_management_app/shared/utils/snackbar_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ class AuthController extends GetxController {
       );
       SnackbarUtil.showSuccessSnackbar(
           'Success', 'User registered successfully');
+      Get.to(() => const Dashboard());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         SnackbarUtil.showErrorSnackbar(
@@ -22,6 +24,8 @@ class AuthController extends GetxController {
       } else if (e.code == 'email-already-in-use') {
         SnackbarUtil.showErrorSnackbar(
             'Error', 'The account already exists for that email.');
+      } else {
+        SnackbarUtil.showErrorSnackbar('Error', e.toString());
       }
     } catch (e) {
       SnackbarUtil.showErrorSnackbar('Error', e.toString());
@@ -34,6 +38,7 @@ class AuthController extends GetxController {
         email: email!,
         password: password!,
       );
+      Get.to(() => const Dashboard());
       SnackbarUtil.showSuccessSnackbar(
           'Success', 'User logged in successfully');
     } on FirebaseAuthException catch (e) {
@@ -43,6 +48,8 @@ class AuthController extends GetxController {
       } else if (e.code == 'wrong-password') {
         SnackbarUtil.showErrorSnackbar(
             'Error', 'Wrong password provided for that user.');
+      } else {
+        SnackbarUtil.showErrorSnackbar('Error', e.toString());
       }
     } catch (e) {
       SnackbarUtil.showErrorSnackbar('Error', e.toString());
