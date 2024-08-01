@@ -1,7 +1,7 @@
+import 'package:employee_management_app/authentication/login/login_screen.dart';
 import 'package:employee_management_app/shared/utils/snackbar_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
 
 class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -44,6 +44,17 @@ class AuthController extends GetxController {
         SnackbarUtil.showErrorSnackbar(
             'Error', 'Wrong password provided for that user.');
       }
+    } catch (e) {
+      SnackbarUtil.showErrorSnackbar('Error', e.toString());
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      Get.offAll(() => const ScreenLoginPage());
+      SnackbarUtil.showSuccessSnackbar(
+          'Success', 'User logged out successfully');
     } catch (e) {
       SnackbarUtil.showErrorSnackbar('Error', e.toString());
     }

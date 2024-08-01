@@ -1,6 +1,7 @@
 import 'package:employee_management_app/authentication/login/widgets/wave_clip_design.dart';
 import 'package:employee_management_app/authentication/controller/auth_controller.dart';
 import 'package:employee_management_app/authentication/register/register_screen.dart';
+import 'package:employee_management_app/dashboard/dashboard_screen.dart';
 import 'package:employee_management_app/shared/constants/button_states.dart';
 import 'package:employee_management_app/shared/theme/color_manager.dart';
 import 'package:employee_management_app/shared/widgets/primary_button.dart';
@@ -158,6 +159,7 @@ class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
                               email: emailController.text,
                               password: passwordController.text);
                           loginController.setButtonState = submit;
+                          Get.to(() => const Dashboard());
                         },
                       ),
                     ],

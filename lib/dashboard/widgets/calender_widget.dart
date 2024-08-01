@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:employee_management_app/shared/theme/color_manager.dart';
 import 'package:flutter/material.dart';
@@ -82,14 +82,19 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               dowTextFormatter: (date, locale) {
                 return DateFormat("EEE").format(date).toUpperCase();
               },
-              weekendStyle: TextStyle(fontWeight: FontWeight.bold),
-              weekdayStyle: TextStyle(fontWeight: FontWeight.bold),
+              weekendStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorManagerLight.redColor),
+              weekdayStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: ColorManagerLight.textColor),
             ),
             onPageChanged: (day) {
               _focusedDay = day;
               setState(() {});
             },
             calendarStyle: CalendarStyle(
+              defaultTextStyle: TextStyle(color: ColorManagerLight.textColor),
               todayDecoration: BoxDecoration(
                 color: ColorManagerLight.primaryColor,
                 shape: BoxShape.circle,
@@ -99,13 +104,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 shape: BoxShape.circle,
               ),
             ),
-            eventLoader: (day) {
-              ///make event on 22 and 12 date every month
-              if (day.day == 22 || day.day == 12) {
-                return [Event("Event Name", canBubble: true)];
-              }
-              return [];
-            },
+            // eventLoader: (day) {
+            //   ///make event on 22 and 12 date every month
+            //   if (day.day == 22 || day.day == 12) {
+            //     return [Event("Event Name", canBubble: true)];
+            //   }
+            //   return [];
+            // },
           )
         ],
       ),

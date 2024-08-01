@@ -1,6 +1,7 @@
 import 'package:employee_management_app/authentication/controller/auth_controller.dart';
 import 'package:employee_management_app/authentication/login/widgets/wave_clip_design.dart';
 import 'package:employee_management_app/authentication/register/register_screen.dart';
+import 'package:employee_management_app/dashboard/dashboard_screen.dart';
 import 'package:employee_management_app/shared/constants/button_states.dart';
 import 'package:employee_management_app/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
-                            // controller: emailController,
+                            controller: emailController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
                               prefixIcon: const Icon(Icons.person),
@@ -151,6 +152,7 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                               await authController.login(
                                   email: emailController.text,
                                   password: passwordController.text);
+                              Get.to(() => const Dashboard());
                               loginController.setButtonState = submit;
                             },
                           ),
