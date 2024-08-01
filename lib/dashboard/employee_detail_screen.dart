@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 class EmployeeDetailPage extends StatelessWidget {
   final int employeeId;
   final DashboardController controller = Get.find();
-  EmployeeDetailPage({Key? key, required this.employeeId}) : super(key: key) {
+
+  EmployeeDetailPage({super.key, required this.employeeId}) {
     controller.fetchEmployeeById(employeeId);
   }
 
@@ -14,11 +15,29 @@ class EmployeeDetailPage extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Employee Details'),
+        title: const Text('Employee Details'),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.shouldRetry.value) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Rate limit exceeded. Please try again later.'),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.fetchEmployeeById(employeeId);
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
         }
 
         final employee = controller.employee.value;
@@ -48,7 +67,7 @@ class EmployeeDetailPage extends StatelessWidget {
                 onPressed: () {
                   Get.back();
                 },
-                child: Text('Back'),
+                child: const Text('Back'),
               ),
             ],
           ),

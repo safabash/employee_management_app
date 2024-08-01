@@ -3,8 +3,9 @@ import 'package:employee_management_app/home/widgets/side_bar.dart';
 import 'package:employee_management_app/shared/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
-
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,8 +15,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: SideBar(),
-    
-    
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               ),
 
             /// Main Body Part
-            Expanded(
+            const Expanded(
               flex: 4,
               child: Dashboard(),
             ),

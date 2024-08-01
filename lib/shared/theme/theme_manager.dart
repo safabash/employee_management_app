@@ -14,7 +14,8 @@ ThemeData getApplicationThemeLight(BuildContext context) {
           getMediumStyle(color: ColorManagerLight.textColor, fontSize: 27),
       displayMedium: getRegularStyle(
           color: ColorManagerLight.secondaryTextColor, fontSize: 14),
-
+      labelLarge:
+          getRegularStyle(color: ColorManagerLight.textColor, fontSize: 16),
       labelMedium:
           getRegularStyle(color: ColorManagerLight.primaryColor, fontSize: 14),
       labelSmall: getRegularStyle(

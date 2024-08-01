@@ -101,6 +101,8 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                       ),
                       SizedBox(height: heightMq / 30),
                       TextFormField(
+                        style: theme.textTheme.labelMedium
+                            ?.copyWith(color: ColorManagerLight.textColor),
                         controller: emailController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
@@ -124,11 +126,12 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                       ),
                       SizedBox(height: heightMq / 37),
                       TextFormField(
+                        style: theme.textTheme.labelMedium
+                            ?.copyWith(color: ColorManagerLight.textColor),
                         controller: passwordController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(Icons.lock_rounded),
-                          suffixIcon: const Icon(Icons.visibility_off),
                           hintText: 'Enter your password',
                           hintStyle: theme.textTheme.displayMedium,
                           label: Text(
@@ -148,15 +151,16 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                           }
                           return null;
                         },
-                        obscureText: true,
+                        obscureText: false,
                       ),
                       SizedBox(height: heightMq / 37),
                       TextFormField(
+                        style: theme.textTheme.labelMedium
+                            ?.copyWith(color: ColorManagerLight.textColor),
                         controller: confirmPasswordController,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           prefixIcon: const Icon(Icons.lock_rounded),
-                          suffixIcon: const Icon(Icons.visibility_off),
                           hintText: 'Confirm your password',
                           hintStyle: theme.textTheme.displayMedium,
                           label: Text(
@@ -176,7 +180,7 @@ class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
                           }
                           return null;
                         },
-                        obscureText: true,
+                        obscureText: false,
                       ),
                       const SizedBox(height: 8),
                       Row(

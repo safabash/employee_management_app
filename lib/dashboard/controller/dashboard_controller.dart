@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:employee_management_app/shared/utils/snackbar_utils.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +7,7 @@ import 'package:employee_management_app/dashboard/service/dashboard_service.dart
 class DashboardController extends GetxController {
   var employees = <EmployeeDetail>[].obs;
   var isLoading = true.obs;
+  var shouldRetry = false.obs;
   final DashboardService dashboardService = DashboardService();
   var employee = EmployeeDetail(
     id: 0,
@@ -18,19 +17,21 @@ class DashboardController extends GetxController {
     profileImage: '',
   ).obs;
 
-  @override
-  void onInit() {
-    fetchEmployees();
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   fetchEmployees();
+  //   super.onInit();
+  // }
 
   Future<void> fetchEmployees() async {
     try {
       isLoading(true);
+      shouldRetry(false); // Reset retry state
       EmployeesListModel fetchedEmployees =
           await dashboardService.fetchEmployees();
       employees.assignAll(fetchedEmployees.data);
     } on RateLimitException {
+      shouldRetry(true); // Set retry state on rate limit
       SnackbarUtil.showErrorSnackbar(
         'Rate Limit Exceeded',
         'You have made too many requests. Please try again later.',
@@ -48,11 +49,12 @@ class DashboardController extends GetxController {
   Future<void> fetchEmployeeById(int id) async {
     try {
       isLoading(true);
+      shouldRetry(false); // Reset retry state
       final response = await dashboardService.fetchEmployeeById(id);
       EmployeeDetail fetchedEmployee = response.data;
       employee.value = fetchedEmployee;
-      log(fetchedEmployee.employeeName);
     } on RateLimitException {
+      shouldRetry(true); // Set retry state on rate limit
       SnackbarUtil.showErrorSnackbar(
         'Rate Limit Exceeded',
         'You have made too many requests. Please try again later.',

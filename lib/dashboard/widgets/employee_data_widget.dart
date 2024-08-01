@@ -17,7 +17,23 @@ class EmployeeDataWidget extends StatelessWidget {
       if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
       }
-
+      if (controller.shouldRetry.value) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Rate limit exceeded. Please try again later.'),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  controller.fetchEmployees(); // Retry fetching employees
+                },
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        );
+      }
       if (controller.employees.isEmpty) {
         return const Center(child: Text('No employees found'));
       }
@@ -43,7 +59,7 @@ class EmployeeDataWidget extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.to(() => CreateEditEmployeePage());
+                    Get.to(() => const CreateEditEmployeePage());
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -63,7 +79,7 @@ class EmployeeDataWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               thickness: 0.5,
               color: Colors.grey,
             ),
@@ -109,7 +125,7 @@ class EmployeeDataWidget extends StatelessWidget {
                 children: [
                   Text(
                       "Showing ${controller.employees.length} out of ${controller.employees.length} Results"),
-                  Text(
+                  const Text(
                     "View All",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -209,7 +225,7 @@ class EmployeeDataWidget extends StatelessWidget {
           // Actions
           if (Responsive.isMobile(context))
             DropdownButton<String>(
-              icon: Icon(Icons.more_vert, color: Colors.grey),
+              icon: const Icon(Icons.more_vert, color: Colors.grey),
               items: [
                 DropdownMenuItem<String>(
                   value: 'view',
@@ -231,13 +247,13 @@ class EmployeeDataWidget extends StatelessWidget {
                 // Handle dropdown selection
                 switch (value) {
                   case 'view':
-                    // Handle view action
+                    Get.to(EmployeeDetailPage(employeeId: employeeId));
                     break;
                   case 'edit':
-                    // Handle edit action
+                    Get.to(() => CreateEditEmployeePage());
                     break;
                   case 'delete':
-                    // Handle delete action
+                    controller.deleteEmployee(employeeId);
                     break;
                 }
               },
@@ -255,11 +271,9 @@ class EmployeeDataWidget extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.delete, color: ColorManagerLight.redColor),
                   onPressed: () {
-                    controller.deleteEmployee(employeeId)
-                      ..whenComplete(() {
-                        controller.fetchEmployees();
-                      });
-                    ;
+                    controller.deleteEmployee(employeeId).whenComplete(() {
+                      controller.fetchEmployees();
+                    });
                   },
                 ),
               ],

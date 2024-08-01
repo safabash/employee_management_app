@@ -1,12 +1,14 @@
 import 'package:employee_management_app/dashboard/controller/dashboard_controller.dart';
 import 'package:employee_management_app/dashboard/model/employees_list_model.dart';
+import 'package:employee_management_app/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multi_state_button/multi_state_button.dart';
 
 class CreateEditEmployeePage extends StatefulWidget {
   final EmployeeDetail? employeeDetail;
 
-  CreateEditEmployeePage({Key? key, this.employeeDetail}) : super(key: key);
+  const CreateEditEmployeePage({super.key, this.employeeDetail});
 
   @override
   State<CreateEditEmployeePage> createState() => _CreateEditEmployeePageState();
@@ -51,6 +53,7 @@ class _CreateEditEmployeePageState extends State<CreateEditEmployeePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.employeeDetail == null
@@ -64,8 +67,9 @@ class _CreateEditEmployeePageState extends State<CreateEditEmployeePage> {
           child: ListView(
             children: [
               TextFormField(
+                style: theme.textTheme.labelLarge,
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a name';
@@ -74,8 +78,9 @@ class _CreateEditEmployeePageState extends State<CreateEditEmployeePage> {
                 },
               ),
               TextFormField(
+                style: theme.textTheme.labelLarge,
                 controller: _ageController,
-                decoration: InputDecoration(labelText: 'Age'),
+                decoration: const InputDecoration(labelText: 'Age'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -88,8 +93,9 @@ class _CreateEditEmployeePageState extends State<CreateEditEmployeePage> {
                 },
               ),
               TextFormField(
+                style: theme.textTheme.labelLarge,
                 controller: _salaryController,
-                decoration: InputDecoration(labelText: 'Salary'),
+                decoration: const InputDecoration(labelText: 'Salary'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -102,9 +108,11 @@ class _CreateEditEmployeePageState extends State<CreateEditEmployeePage> {
                 },
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
+              PrimaryButton(
+                key: const Key('Register'),
+                controller: MultiStateButtonController(),
+                text: widget.employeeDetail == null ? 'Create' : 'Save',
                 onPressed: _saveEmployee,
-                child: Text(widget.employeeDetail == null ? 'Create' : 'Save'),
               ),
             ],
           ),

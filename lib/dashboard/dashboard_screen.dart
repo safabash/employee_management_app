@@ -1,3 +1,4 @@
+import 'package:employee_management_app/dashboard/controller/dashboard_controller.dart';
 import 'package:employee_management_app/dashboard/widgets/calender_widget.dart';
 import 'package:employee_management_app/dashboard/widgets/employee_data_widget.dart';
 import 'package:employee_management_app/dashboard/widgets/header_widget.dart';
@@ -7,6 +8,7 @@ import 'package:employee_management_app/shared/theme/color_manager.dart';
 import 'package:employee_management_app/shared/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -15,7 +17,15 @@ class Dashboard extends StatefulWidget {
   _DashboardState createState() => _DashboardState();
 }
 
+final DashboardController controller = Get.find();
+
 class _DashboardState extends State<Dashboard> {
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchEmployees();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

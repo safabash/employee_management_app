@@ -3,6 +3,7 @@ import 'package:employee_management_app/authentication/login/widgets/wave_clip_d
 import 'package:employee_management_app/authentication/register/register_screen.dart';
 import 'package:employee_management_app/dashboard/dashboard_screen.dart';
 import 'package:employee_management_app/shared/constants/button_states.dart';
+import 'package:employee_management_app/shared/theme/color_manager.dart';
 import 'package:employee_management_app/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -24,6 +25,8 @@ final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 
 class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -38,52 +41,54 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
     final widthMq = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
-        body: Stack(
-          children: [
-            Stack(
-              children: [
-                TopClip(
-                  size: size,
-                  height: 140,
-                  color: const Color(0xFFB4CEF3),
-                  clipper: WaveClipperOne(),
-                ),
-                TopClip(
-                  size: size,
-                  height: 120,
-                  color: const Color(0xFFECEFFF),
-                  clipper: WaveClipperTwo(),
-                ),
-                BottomClip(
-                  size: size,
-                  height: 130,
-                  color: const Color(0xFFECEFFF),
-                  clipper: WaveClipperOne(reverse: true),
-                ),
-                BottomClip(
-                  size: size,
-                  height: 120,
-                  color: const Color(0xFFB4CEF3),
-                  clipper: WaveClipperTwo(reverse: true),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    height: heightMq / 2.5,
-                    width: widthMq / 2.3,
-                    child: Lottie.asset(
-                      'assets/lottie_assets/auth.json',
-                    ),
+      backgroundColor: const Color(0xFFFFFFFF),
+      body: Stack(
+        children: [
+          Stack(
+            children: [
+              TopClip(
+                size: size,
+                height: 140,
+                color: const Color(0xFFB4CEF3),
+                clipper: WaveClipperOne(),
+              ),
+              TopClip(
+                size: size,
+                height: 120,
+                color: const Color(0xFFECEFFF),
+                clipper: WaveClipperTwo(),
+              ),
+              BottomClip(
+                size: size,
+                height: 130,
+                color: const Color(0xFFECEFFF),
+                clipper: WaveClipperOne(reverse: true),
+              ),
+              BottomClip(
+                size: size,
+                height: 120,
+                color: const Color(0xFFB4CEF3),
+                clipper: WaveClipperTwo(reverse: true),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  height: heightMq / 2.5,
+                  width: widthMq / 2.3,
+                  child: Lottie.asset(
+                    'assets/lottie_assets/auth.json',
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    height: heightMq / 1.4,
-                    width: widthMq / 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: heightMq / 1.4,
+                  width: widthMq / 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: _formKey,
                       child: Column(
                         children: [
                           Text(
@@ -93,6 +98,8 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
+                            style: theme.textTheme.labelMedium
+                                ?.copyWith(color: ColorManagerLight.textColor),
                             controller: emailController,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
@@ -105,14 +112,23 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              // You can add more validation here if needed
+                              return null;
+                            },
                           ),
                           const SizedBox(height: 6),
                           TextFormField(
                             controller: passwordController,
+                            obscureText: false,
+                            style: theme.textTheme.labelMedium
+                                ?.copyWith(color: ColorManagerLight.textColor),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
                               prefixIcon: const Icon(Icons.lock_rounded),
-                              suffixIcon: const Icon(Icons.visibility_off),
                               hintText: 'Enter your password',
                               hintStyle: theme.textTheme.displayMedium,
                               label: Text('Password',
@@ -121,6 +137,12 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
                           ),
                           const SizedBox(height: 5),
                           Text(
@@ -133,13 +155,14 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                             children: [
                               const Spacer(),
                               TextButton(
-                                  onPressed: () {
-                                    Get.to(() => const RegisterScreen());
-                                  },
-                                  child: Text(
-                                    'Register',
-                                    style: theme.textTheme.labelMedium,
-                                  ))
+                                onPressed: () {
+                                  Get.to(() => const RegisterScreen());
+                                },
+                                child: Text(
+                                  'Register',
+                                  style: theme.textTheme.labelMedium,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -148,22 +171,32 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                             controller: loginController,
                             text: 'Login',
                             onPressed: () async {
-                              loginController.setButtonState = loading;
-                              await authController.login(
-                                  email: emailController.text,
-                                  password: passwordController.text);
-                              Get.to(() => const Dashboard());
-                              loginController.setButtonState = submit;
+                              if (_formKey.currentState?.validate() ?? false) {
+                                // loginController.setButtonState = loading;
+                                // await authController.login(
+                                //   email: emailController.text,
+                                //   password: passwordController.text,
+                                // );
+                                // loginController.setButtonState = submit;
+
+                                // Assuming successful login
+                                Get.to(() => const Dashboard());
+                              } else {
+                                // Handle validation error
+                                loginController.setButtonState = submit;
+                              }
                             },
                           ),
                         ],
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ],
-        ));
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
