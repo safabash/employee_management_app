@@ -184,8 +184,7 @@ class EmployeeDataWidget extends StatelessWidget {
                       imageUrl: image,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) =>
-                              CircularProgressIndicator(
-                                  value: downloadProgress.progress),
+                              const Icon(Icons.person),
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.person),
                     ),
