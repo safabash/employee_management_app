@@ -1,6 +1,6 @@
 import 'package:employee_management_app/authentication/login/widgets/wave_clip_design.dart';
 import 'package:employee_management_app/authentication/controller/auth_controller.dart';
-import 'package:employee_management_app/authentication/register/register_screen.dart';
+import 'package:employee_management_app/dashboard/dashboard_screen.dart';
 import 'package:employee_management_app/shared/constants/button_states.dart';
 import 'package:employee_management_app/shared/theme/color_manager.dart';
 import 'package:employee_management_app/shared/widgets/primary_button.dart';
@@ -14,23 +14,24 @@ import 'package:get/route_manager.dart';
 import 'package:lottie/lottie.dart';
 import 'package:multi_state_button/multi_state_button.dart';
 
-class ScreenLoginWindows extends StatefulWidget {
-  const ScreenLoginWindows({super.key});
+class ScreenRegisterWindows extends StatefulWidget {
+  const ScreenRegisterWindows({super.key});
 
   @override
-  State<ScreenLoginWindows> createState() => _ScreenLoginWindowsState();
+  State<ScreenRegisterWindows> createState() => _ScreenRegisterWindowsState();
 }
 
 final AuthController authController = Get.put(AuthController());
-final loginController = MultiStateButtonController();
+final registerController = MultiStateButtonController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
+final TextEditingController confirmPasswordController = TextEditingController();
 
-class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
+class _ScreenRegisterWindowsState extends State<ScreenRegisterWindows> {
   @override
   void initState() {
     super.initState();
-    loginController.setButtonState = submit;
+    registerController.setButtonState = submit;
   }
 
   @override
@@ -93,7 +94,7 @@ class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'LOGIN',
+                        'REGISTER',
                         style: theme.textTheme.titleMedium,
                       ),
                       SizedBox(height: heightMq / 30),
@@ -127,37 +128,34 @@ class _ScreenLoginWindowsState extends State<ScreenLoginWindows> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Are you a new user?',
-                        style: theme.textTheme.labelSmall,
-                        textAlign: TextAlign.right,
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          TextButton(
-                              onPressed: () {
-                                Get.to(() => const RegisterScreen());
-                              },
-                              child: Text(
-                                'Register',
-                                style: theme.textTheme.labelMedium,
-                              ))
-                        ],
+                      SizedBox(height: heightMq / 37),
+                      TextFormField(
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          prefixIcon: const Icon(Icons.lock_rounded),
+                          suffixIcon: const Icon(Icons.visibility_off),
+                          hintText: 'Confirm your password',
+                          hintStyle: theme.textTheme.displayMedium,
+                          label: Text('Confirm Password',
+                              style: theme.textTheme.labelMedium),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 20),
                       PrimaryButton(
-                        key: const Key('login'),
-                        controller: loginController,
-                        text: 'Login',
+                        key: const Key('Register'),
+                        controller: registerController,
+                        text: 'Register',
                         onPressed: () async {
-                          loginController.setButtonState = loading;
-                          await authController.login(
-                              email: emailController.text,
-                              password: passwordController.text);
-                          loginController.setButtonState = submit;
+                          Get.to(() => const Dashboard());
+                          // registerController.setButtonState = loading;
+                          // await authController.register(
+                          //     email: emailController.text,
+                          //     password: passwordController.text);
+                          // registerController.setButtonState = submit;
                         },
                       ),
                     ],

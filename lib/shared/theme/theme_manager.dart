@@ -65,9 +65,9 @@ ThemeData getApplicationThemeLight(BuildContext context) {
       //white text
 
       titleMedium:
-          getMediumStyle(color: ColorManagerLight.textColor, fontSize: 27.sp),
+          getMediumStyle(color: ColorManagerLight.textColor, fontSize: 27),
       displayMedium: getRegularStyle(
-          color: ColorManagerLight.secondaryTextColor, fontSize: 14.sp),
+          color: ColorManagerLight.secondaryTextColor, fontSize: 14),
       //   displaySmall: getRegularStyle(color: ColorManagerLight.greyTextColor),
       //   headlineLarge: getExtraBoldStyle(
       //     color: ColorManagerLight.secondary,
@@ -90,10 +90,10 @@ ThemeData getApplicationThemeLight(BuildContext context) {
 
       //   labelLarge:
       //       getSemiBoldStyle(color: ColorManagerLight.secondary, fontSize: 24.sp),
-      labelMedium: getRegularStyle(
-          color: ColorManagerLight.primaryColor, fontSize: 14.sp),
+      labelMedium:
+          getRegularStyle(color: ColorManagerLight.primaryColor, fontSize: 14),
       labelSmall: getRegularStyle(
-          color: ColorManagerLight.secondaryTextColor, fontSize: 12.sp),
+          color: ColorManagerLight.secondaryTextColor, fontSize: 12),
       //   bodySmall:
       //       getRegularStyle(color: ColorManagerLight.secondary, fontSize: 10.sp),
       //   bodyLarge: getMediumStyle(
@@ -103,7 +103,7 @@ ThemeData getApplicationThemeLight(BuildContext context) {
 
       //   // //black shade - input text color
       bodyMedium: getRegularStyle(
-          color: ColorManagerLight.scaffoldBgColor, fontSize: 12.sp),
+          color: ColorManagerLight.scaffoldBgColor, fontSize: 12),
     ),
     // colorScheme: ColorScheme(
     //   primary: ColorManagerLight.primary,

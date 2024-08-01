@@ -1,32 +1,33 @@
 import 'package:employee_management_app/authentication/controller/auth_controller.dart';
 import 'package:employee_management_app/authentication/login/widgets/wave_clip_design.dart';
-import 'package:employee_management_app/authentication/register/register_screen.dart';
+import 'package:employee_management_app/dashboard/dashboard_screen.dart';
 import 'package:employee_management_app/shared/constants/button_states.dart';
 import 'package:employee_management_app/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:lottie/lottie.dart';
 import 'package:multi_state_button/multi_state_button.dart';
 
-class ScreenLoginMobile extends StatefulWidget {
-  const ScreenLoginMobile({super.key});
+class ScreenRegisterMobile extends StatefulWidget {
+  const ScreenRegisterMobile({super.key});
 
   @override
-  State<ScreenLoginMobile> createState() => _ScreenLoginMobileState();
+  State<ScreenRegisterMobile> createState() => _ScreenRegisterMobileState();
 }
 
 final AuthController authController = Get.put(AuthController());
-final loginController = MultiStateButtonController();
+final registerController = MultiStateButtonController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
+final TextEditingController confirmPasswordController = TextEditingController();
 
-class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
+class _ScreenRegisterMobileState extends State<ScreenRegisterMobile> {
   @override
   void initState() {
     super.initState();
-    loginController.setButtonState = submit;
+    registerController.setButtonState = submit;
   }
 
   @override
@@ -86,9 +87,8 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                       child: Column(
                         children: [
                           Text(
-                            'LOGIN',
-                            style: GoogleFonts.poppins(
-                                fontSize: 27, fontWeight: FontWeight.w500),
+                            'REGISTER',
+                            style: theme.textTheme.titleMedium,
                           ),
                           const SizedBox(height: 5),
                           TextFormField(
@@ -121,37 +121,34 @@ class _ScreenLoginMobileState extends State<ScreenLoginMobile> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            'Are you a new user?',
-                            style: theme.textTheme.labelSmall,
-                            textAlign: TextAlign.right,
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Spacer(),
-                              TextButton(
-                                  onPressed: () {
-                                    Get.to(() => const RegisterScreen());
-                                  },
-                                  child: Text(
-                                    'Register',
-                                    style: theme.textTheme.labelMedium,
-                                  ))
-                            ],
+                          const SizedBox(height: 6),
+                          TextFormField(
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              prefixIcon: const Icon(Icons.lock_rounded),
+                              suffixIcon: const Icon(Icons.visibility_off),
+                              hintText: 'Confirm your password',
+                              hintStyle: theme.textTheme.displayMedium,
+                              label: Text('Confirm Password',
+                                  style: theme.textTheme.labelMedium),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 20),
                           PrimaryButton(
-                            key: const Key('login'),
-                            controller: loginController,
-                            text: 'Login',
+                            key: const Key('register'),
+                            controller: registerController,
+                            text: 'Register',
                             onPressed: () async {
-                              loginController.setButtonState = loading;
-                              await authController.login(
-                                  email: emailController.text,
-                                  password: passwordController.text);
-                              loginController.setButtonState = submit;
+                              Get.to(() => const Dashboard());
+                              // registerController.setButtonState = loading;
+                              // await authController.register(
+                              //     email: emailController.text,
+                              //     password: passwordController.text);
+                              // registerController.setButtonState = submit;
                             },
                           ),
                         ],

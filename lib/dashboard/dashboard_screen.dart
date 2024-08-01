@@ -18,62 +18,64 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10.r),
-      padding: EdgeInsets.all(10.r),
-      decoration: BoxDecoration(
-        color: ColorManagerLight.scaffoldBgColor,
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Column(
-        children: [
-          /// Header Part
-          HeaderWidget(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      child: Column(
-                        children: [
-                          NotificationCardWidget(),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          if (Responsive.isMobile(context)) ...{
-                            CalendarWidget(),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                          },
-                          const EmployeeDataWidget(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (!Responsive.isMobile(context))
+    return Scaffold(
+      body: Container(
+        margin: EdgeInsets.all(10.r),
+        padding: EdgeInsets.all(10.r),
+        decoration: BoxDecoration(
+          color: ColorManagerLight.scaffoldBgColor,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Column(
+          children: [
+            /// Header Part
+            HeaderWidget(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Expanded(
+                      flex: 2,
                       child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
                           children: [
-                            CalendarWidget(),
+                            NotificationCardWidget(),
                             const SizedBox(
                               height: 20,
                             ),
-                            ProfileCardWidget(),
+                            if (Responsive.isMobile(context)) ...{
+                              CalendarWidget(),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                            },
+                            const EmployeeDataWidget(),
                           ],
                         ),
                       ),
                     ),
-                ],
+                    if (!Responsive.isMobile(context))
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            children: [
+                              CalendarWidget(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              ProfileCardWidget(),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

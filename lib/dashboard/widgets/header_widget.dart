@@ -2,7 +2,6 @@ import 'package:employee_management_app/shared/theme/color_manager.dart';
 import 'package:employee_management_app/shared/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
-
 class HeaderWidget extends StatefulWidget {
   @override
   _HeaderWidgetState createState() => _HeaderWidgetState();
@@ -11,25 +10,19 @@ class HeaderWidget extends StatefulWidget {
 class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: EdgeInsets.all(10),
       child: Row(
         children: [
           if (!Responsive.isDesktop(context))
             IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: ColorManagerLight.textColor,
-              ),
-              onPressed: (){}
-            ),
-          Text(
-            "Dashboard",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+                icon: Icon(
+                  Icons.menu,
+                  color: ColorManagerLight.textColor,
+                ),
+                onPressed: () {}),
+          Text("Dashboard", style: theme.textTheme.titleMedium),
           if (!Responsive.isMobile(context)) ...{
             Spacer(),
             Row(
